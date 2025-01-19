@@ -24,18 +24,17 @@
             overflow: hidden;
         }
         .img-container {
-    flex: 1;
-    background: url('https://images.unsplash.com/photo-1557683316-973673baf926');
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.img-container .logo {
-    width: 100px; /* Adjust as needed */
-    height: auto;
-}
+            flex: 1;
+            background: url('https://images.unsplash.com/photo-1557683316-973673baf926');
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .img-container .logo {
+            width: 100px; /* Adjust as needed */
+            height: auto;
+        }
         .form-container {
             flex: 1;
             padding: 2rem;
@@ -90,7 +89,9 @@
 <body>
     <div class="container">
         <div class="img-container">
-            <img src="assets/images/logo.svg" alt="Logo" class="logo">
+            <a href="../../index.html">
+                <img src="assets/images/logo.svg" alt="Logo" class="logo">
+            </a>
         </div>
         <div class="form-container">
             <h1>Welcome Back!</h1>
@@ -107,15 +108,18 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent the default form submission
 
-            // Simulate a login (replace with server-side validation if needed)
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            if (username && password) {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+
+            const user = users.find(user => user.username === username && user.password === password);
+
+            if (user) {
                 // Redirect to the homepage (index.html)
                 window.location.href = 'index.html';
             } else {
-                alert('Please enter valid credentials!');
+                alert('Invalid username or password!');
             }
         });
     </script>
