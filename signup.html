@@ -24,18 +24,17 @@
             overflow: hidden;
         }
         .img-container {
-    flex: 1;
-    background: url('https://images.unsplash.com/photo-1557683316-973673baf926');
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.img-container .logo {
-    width: 100px; /* Adjust as needed */
-    height: auto;
-}
+            flex: 1;
+            background: url('https://images.unsplash.com/photo-1557683316-973673baf926');
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .img-container .logo {
+            width: 100px; /* Adjust as needed */
+            height: auto;
+        }
         .form-container {
             flex: 1;
             padding: 2rem;
@@ -72,7 +71,7 @@
             transition: background 0.3s;
         }
         .form-container button:hover {
-            background: hsl(211, 80%, 34%);
+            background: hsl(211, 70%, 17%);
         }
         .form-container .message {
             text-align: center;
@@ -80,7 +79,7 @@
             color: #555;
         }
         .form-container .message a {
-            color: hsl(211, 80%, 34%);
+            color: hsl(211, 70%, 17%);
             text-decoration: none;
         }
         .form-container .message a:hover {
@@ -91,15 +90,19 @@
 <body>
     <div class="container">
         <div class="img-container">
-            <img src="assets/images/logo.svg" alt="Logo" class="logo">
+            <a href="../../index.html">
+                <img src="assets/images/logo.svg" alt="Logo" class="logo">
+            </a>
         </div>
         <div class="form-container">
-            <h1>Create an Account</h1>
+            <h1>Create Account</h1>
             <form id="signupForm">
-                <input type="text" id="signupUsername" placeholder="Username" required>
-                <input type="email" id="signupEmail" placeholder="Email" required>
-                <input type="password" id="signupPassword" placeholder="Password" required>
-                <input type="password" id="signupConfirmPassword" placeholder="Confirm Password" required>
+                <input type="text" id="firstName" placeholder="First Name" required>
+                <input type="text" id="lastName" placeholder="Last Name" required>
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="text" id="newUsername" placeholder="Username" required>
+                <input type="password" id="newPassword" placeholder="Password" required>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
                 <button type="submit">Sign Up</button>
             </form>
             <p class="message">Already have an account? <a href="login.html">Login</a></p>
@@ -110,22 +113,28 @@
         document.getElementById('signupForm').addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent the default form submission
 
-            // Simulate saving credentials (replace this with server-side logic)
-            const username = document.getElementById('signupUsername').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const newUsername = document.getElementById('newUsername').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
 
-            if (username && email && password) {
-                // Save credentials to localStorage (temporary storage for this demo)
-                localStorage.setItem('username', username);
-                localStorage.setItem('email', email);
-                localStorage.setItem('password', password);
-
-                alert('Account created successfully! Redirecting to login page.');
-                window.location.href = 'login.html';
-            } else {
-                alert('Please fill out all fields!');
+            if (newPassword !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
             }
+
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+
+            users.push({ firstName, lastName, email, username: newUsername, password: newPassword });
+
+            localStorage.setItem('users', JSON.stringify(users));
+
+            alert('Account created successfully!');
+
+            // Redirect to the login page
+            window.location.href = 'login.html';
         });
     </script>
 </body>
