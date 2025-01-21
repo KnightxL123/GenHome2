@@ -25,14 +25,15 @@
         }
         .img-container {
             flex: 1;
-            background: url('https://images.unsplash.com/photo-1557683316-973673baf926');
+            background: url('https://images.unsplash.com/photo-1557683316-973673baf926') no-repeat center center;
+            background-size: cover;
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
         }
         .img-container .logo {
-            width: 100px; /* Adjust as needed */
+            width: 100px;
             height: auto;
         }
         .form-container {
@@ -105,18 +106,31 @@
     </div>
 
     <script>
+        // Mock data: Users stored in localStorage for demonstration purposes
+        if (!localStorage.getItem('users')) {
+            const mockUsers = [
+                { username: 'john_doe', password: 'password123' },
+                { username: 'jane_doe', password: 'mypassword' }
+            ];
+            localStorage.setItem('users', JSON.stringify(mockUsers));
+        }
+
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent the default form submission
+            e.preventDefault();
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
             const users = JSON.parse(localStorage.getItem('users')) || [];
 
+            // Check if the user exists and credentials match
             const user = users.find(user => user.username === username && user.password === password);
 
             if (user) {
-                // Redirect to the homepage (index.html)
+                // Save the logged-in user's username in localStorage
+                localStorage.setItem('loggedInUser', JSON.stringify(user));
+
+                // Redirect to the homepage
                 window.location.href = 'index.html';
             } else {
                 alert('Invalid username or password!');
