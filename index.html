@@ -145,6 +145,11 @@
         <div style="display: flex; gap: 5px;">
           <a href="login.html" class="btn btn-secondary">Login</a>
           <a href="signup.html" class="btn btn-secondary">Signup</a>
+
+          Logged in as: <span id="usernameDisplay"></span>
+        </div>
+    </div>
+
       </div>
       </div>
     </div>
@@ -838,6 +843,20 @@
                     closeModal();
                   }
                 });
+
+                
+        // Get the logged-in user's data from localStorage
+        const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
+        // Display the username on the homepage
+        if (loggedInUser) {
+            document.getElementById('usernameDisplay').textContent = loggedInUser.username;
+        } else {
+            // Redirect back to the login page if no user is logged in
+            window.location.href = 'login.html';
+        }
+     
+              
               </script>
 
   </footer>
